@@ -19,6 +19,9 @@ namespace SingleSignOn.Backend
 
             app.MapControllers();
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             app.Run();
         }
     }
