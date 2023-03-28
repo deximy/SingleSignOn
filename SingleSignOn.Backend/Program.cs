@@ -10,9 +10,6 @@ namespace SingleSignOn.Backend
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddSingleton<JwtGeneratorService>();
-            builder.Services.AddSingleton<SteamVerifyService>();
-
             // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -36,6 +33,9 @@ namespace SingleSignOn.Backend
                 .AddSteam(
                     options => options.ApplicationKey = builder.Configuration["Steam:ApplicationKey"]
                 );
+
+            builder.Services.AddSingleton<JwtGeneratorService>();
+            builder.Services.AddScoped<SteamIdentityService>();
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
