@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SingleSignOn.Backend.Services;
-using System.IdentityModel.Tokens.Jwt;
 
 namespace SingleSignOn.Backend.Controllers
 {

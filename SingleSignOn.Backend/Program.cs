@@ -1,8 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using SingleSignOn.Backend.Services;
-using System.ComponentModel;
 
 namespace SingleSignOn.Backend
 {
@@ -13,6 +11,7 @@ namespace SingleSignOn.Backend
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddSingleton<JwtGeneratorService>();
+            builder.Services.AddSingleton<SteamVerifyService>();
 
             // Add services to the container.
             builder.Services.AddDbContext<ApplicationDbContext>(
@@ -23,6 +22,7 @@ namespace SingleSignOn.Backend
                     options => {
                     }
                 )
+                .AddUserManager<CustomUserManager>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             builder.Services
@@ -31,6 +31,11 @@ namespace SingleSignOn.Backend
                 .AddInMemoryApiScopes(Config.ApiScopes)
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
+            builder.Services
+                .AddAuthentication()
+                .AddSteam(
+                    options => options.ApplicationKey = builder.Configuration["Steam:ApplicationKey"]
+                );
 
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
