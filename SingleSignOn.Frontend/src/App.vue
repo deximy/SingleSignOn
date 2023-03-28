@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import Login from "./views/Login.vue";
-
 import {NMessageProvider} from "naive-ui";
 </script>
 
 <template>
     <n-message-provider>
-        <Login/>
+        <router-view />
     </n-message-provider>
 </template>
 

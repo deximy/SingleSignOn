@@ -64,6 +64,11 @@ namespace SingleSignOn.Backend
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
+            app.UseSpa(
+                single_page_app => {
+                    single_page_app.Options.SourcePath = "wwwroot";
+                }
+            );
 
             app.Run();
         }
