@@ -12,7 +12,14 @@ const GetJwtBySteamToken = async (steam_token: string) => {
             body: JSON.stringify(steam_token),
         }
     );
-    console.log(response);
+    if (!response.ok)
+    {
+        return false;
+    }
+
+    let token = await response.text();
+    localStorage.setItem("token", token);
+    return true;
 };
 
 export {GetJwtBySteamToken};
