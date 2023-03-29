@@ -10,5 +10,13 @@ export default defineConfig(
         plugins: [
             vue()
         ],
+        server: {
+            proxy: {
+                "/jwts": {
+                    target: "http://localhost:5000",
+                    changeOrigin: true,
+                },
+            },
+        },
     },
 );
