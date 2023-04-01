@@ -47,28 +47,28 @@ namespace SingleSignOn.Backend.Services
             var user = await user_namager_.FindBySteamIdAsync(steam_id);
             if (user == null)
             {
-                await CreateUserBySteamId(steam_id);
+                user = await CreateUserBySteamId(steam_id);
             }
 
-            return jwt_generator_.GenerateJwt(steam_id);
+            return jwt_generator_.GenerateJwt(user.Id);
         }
 
-        public async Task CreateUserBySteamId(string steam_id)
+        public async Task<ApplicationUser> CreateUserBySteamId(string steam_id)
         {
-            var create_user_result = await user_namager_.CreateAsync(
-                new ApplicationUser() {
-                    UserName = steam_id,
-                    LinkedSteamAccounts = new List<LinkedSteamAccount>() {
-                        new LinkedSteamAccount() {
-                            steam_id = steam_id
-                        }
+            var new_user = new ApplicationUser() {
+                UserName = steam_id,
+                LinkedSteamAccounts = new List<LinkedSteamAccount>() {
+                    new LinkedSteamAccount() {
+                        steam_id = steam_id
                     }
                 }
-            );
+            };
+            var create_user_result = await user_namager_.CreateAsync(new_user);
             if (!create_user_result.Succeeded)
             {
                 throw new CreateUserException(create_user_result.Errors);
             }
+            return new_user;
         }
 
         public string? GetSteamId(string token)

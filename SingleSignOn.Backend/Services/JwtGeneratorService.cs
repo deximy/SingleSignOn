@@ -22,7 +22,7 @@ namespace SingleSignOn.Backend.Services
             var token_descriptor = new SecurityTokenDescriptor {
                 Subject = new ClaimsIdentity(
                     new Claim[] {
-                        new Claim(ClaimTypes.Name, user_name)
+                        new Claim(ClaimTypes.NameIdentifier, user_name)
                     }
                 ),
                 Expires = DateTime.UtcNow.AddDays(7),
