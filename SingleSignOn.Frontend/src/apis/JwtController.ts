@@ -1,6 +1,6 @@
 import {Global} from "./Global";
 
-const GetJwtBySteamToken = async (steam_token: string) => {
+const GetJwtBySteamToken = async (steam_token: string, redirect_url: string | null = null) => {
     let headers = new Headers();
     headers.append("Content-Type", "application/json");
 
@@ -9,7 +9,13 @@ const GetJwtBySteamToken = async (steam_token: string) => {
         {
             method: "POST",
             headers: headers,
-            body: JSON.stringify(steam_token),
+            body: JSON.stringify(
+                {
+                    "provider": "steam",
+                    "token": steam_token,
+                    "redirect": redirect_url
+                }
+            ),
         }
     );
     if (!response.ok)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SingleSignOn.Backend.Services;
+using SingleSignOn.Backend.ViewModels;
 
 namespace SingleSignOn.Backend.Controllers
 {
@@ -17,9 +18,23 @@ namespace SingleSignOn.Backend.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] string data)
+        public async Task<IActionResult> Post([FromBody] CreateJwtViewModel view_model)
         {
-            return Ok(await steam_identity_service_.GenerateJwt(data));
+            if (view_model.provider == "steam")
+            {
+                if (view_model.token == null)
+                {
+                    return BadRequest($"token can't be empty when provider is \"steam\".");
+                }
+
+                var jwt = await steam_identity_service_.GenerateJwt(view_model.token);
+                if (view_model.redirect != null)
+                {
+                    return Redirect($"{view_model.redirect}/?jwt={jwt}");
+                }
+                return Created("", jwt);
+            }
+            return BadRequest($"Unknown provider: {view_model.provider}");
         }
     }
 }
