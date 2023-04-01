@@ -6,6 +6,7 @@ import App from "./App.vue";
 import Index from "./views/Index.vue";
 import Login from "./views/Login.vue";
 import Callback from "./views/Callback.vue";
+import Authentication from "./views/Authentication.vue";
 
 const routes = [
     {
@@ -22,6 +23,11 @@ const routes = [
         name: "Callback",
         path: "/callback/:external_id_provider",
         component: Callback
+    },
+    {
+        name: "Authentication",
+        path: "/authentication",
+        component: Authentication
     },
 ];
 

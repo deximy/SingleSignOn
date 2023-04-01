@@ -12,7 +12,7 @@ IsAuthenticated().then(result => is_authenticated.value = result);
             <span>这是一个什么都没有的首页，</span><router-link to="/login">点击跳转到登录页</router-link>
         </div>
         <div v-else>
-            <span>这是一个什么都没有的首页，你已登录！</span>
+            <span>这是一个什么都没有的首页，你已登录，请返回原页面</span>
         </div>
     </div>
 </template>
